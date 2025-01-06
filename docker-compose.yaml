@@ -1,0 +1,40 @@
+version: '4'
+
+services:
+#  java-app:
+#    build:
+#      context: .
+#      dockerfile: dev.Dockerfile
+#    container_name: java_app_container
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      # Monta tu código fuente local en el contenedor
+#      - ./src:/app/src
+#      - ./pom.xml:/app/pom.xml
+#      - ~/.m2:/root/.m2 # Opcional: Cache de dependencias de Maven para velocidad
+#    command: mvn spring-boot:run
+#    depends_on:
+#      - postgres
+#    environment:
+#      DB_URL: jdbc:postgresql://postgres:5432/postgres_db
+#      DB_USERNAME: postgres_user
+#      DB_PASSWORD: postgres_password
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_container
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: postgres_db
+    volumes:
+      - postgres_data:/data/postgres
+
+volumes:
+  postgres_data:
+
+networks:
+  postgresql_networks:
