@@ -8,7 +8,7 @@ import com.yascode.domain.value_objects.Status;
 
 public class CustomerFactory {
 
-    public static Customer createCustomer(Integer id, String name, String email, int age, String status) {
+    public static Customer createCustomer(Integer id, String name, String email, Integer age, String status) {
         if (email == null || email.isEmpty()) {
             throw new NotNullException("Email");
         }
@@ -26,12 +26,11 @@ public class CustomerFactory {
 
         Email emailVo = new Email(email);
 
-        return new Customer.Builder()
-                .setId(id)
-                .setName(name)
-                .setAge(age)
-                .setStatus(statusVo)
-                .setEmail(emailVo)
-                .build();
+        Customer customer = new Customer(name, age);
+        customer.setId(id);
+        customer.setStatus(statusVo);
+        customer.setEmail(emailVo);
+
+        return customer;
     }
 }
