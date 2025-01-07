@@ -1,15 +1,17 @@
 package com.yascode.application.usecases;
 
 import com.yascode.application.usecases.base.BaseUseCaseWithoutOutput;
-import com.yascode.infrastructure.out.db.CustomerDbAdapter;
+import com.yascode.domain.ports.CustomerDbRepositoryPort;
+import com.yascode.infrastructure.out.jpa_db.CustomerDao;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DeleteCustomerByIdUseCase extends BaseUseCaseWithoutOutput<Integer> {
 
-    private final CustomerDbAdapter customerDbAdapter;
+    private final CustomerDbRepositoryPort<CustomerDao> customerDbAdapter;
 
-    public DeleteCustomerByIdUseCase(CustomerDbAdapter customerDbAdapter) {
+    public DeleteCustomerByIdUseCase(@Qualifier("jpa") CustomerDbRepositoryPort<CustomerDao> customerDbAdapter) {
         this.customerDbAdapter = customerDbAdapter;
     }
 

@@ -1,10 +1,9 @@
 package com.yascode.application.usecases.base;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.yascode.application.services.LoggerConsoleService;
 
 public abstract class BaseUseCaseWithoutInput<RS> {
-    private static final LoggerConsole console = new LoggerConsole();
+    private static final LoggerConsoleService console = new LoggerConsoleService();
 
     public RS run() {
         long startTime = System.currentTimeMillis();

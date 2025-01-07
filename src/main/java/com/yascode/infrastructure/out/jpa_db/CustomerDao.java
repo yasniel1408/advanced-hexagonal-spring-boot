@@ -1,4 +1,4 @@
-package com.yascode.infrastructure.out.db;
+package com.yascode.infrastructure.out.jpa_db;
 
 import jakarta.persistence.*;
 import lombok.Getter;

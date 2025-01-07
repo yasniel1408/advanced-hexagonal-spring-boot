@@ -1,17 +1,19 @@
-package com.yascode.infrastructure.out.db;
+package com.yascode.infrastructure.out.jpa_db;
 
 import com.yascode.domain.ports.CustomerDbRepositoryPort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class CustomerDbAdapter implements CustomerDbRepositoryPort<CustomerDao> {
+@Service("jpa")
+@Transactional
+public class CustomerJpaDbAdapter implements CustomerDbRepositoryPort<CustomerDao> {
 
     private final JpaCustomerRepository repository;
 
-    public CustomerDbAdapter(JpaCustomerRepository repository) {
+    public CustomerJpaDbAdapter(JpaCustomerRepository repository) {
         this.repository = repository;
     }
 
@@ -23,6 +25,11 @@ public class CustomerDbAdapter implements CustomerDbRepositoryPort<CustomerDao> 
     @Override
     public boolean existByEmail(String email) {
         return repository.existsCustomerDaoByEmail(email);
+    }
+
+    @Override
+    public boolean existById(Integer id) {
+        return repository.existsCustomerDaoById(id);
     }
 
     @Override

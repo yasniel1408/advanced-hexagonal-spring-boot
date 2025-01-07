@@ -2,18 +2,19 @@ package com.yascode.application.usecases;
 
 import com.yascode.application.usecases.base.BaseUseCase;
 import com.yascode.domain.errors.NotFoundCustomerException;
+import com.yascode.domain.ports.CustomerDbRepositoryPort;
 import com.yascode.infrastructure.in.http.response.CustomerResponseDto;
-import com.yascode.infrastructure.out.db.CustomerDao;
-import com.yascode.infrastructure.out.db.CustomerDbAdapter;
+import com.yascode.infrastructure.out.jpa_db.CustomerDao;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class GetCustomerByIdUseCase extends BaseUseCase<Integer, CustomerResponseDto> {
-    private final CustomerDbAdapter customerDbAdapter;
+    private final CustomerDbRepositoryPort<CustomerDao> customerDbAdapter;
 
-    public GetCustomerByIdUseCase(CustomerDbAdapter customerDbAdapter) {
+    public GetCustomerByIdUseCase(@Qualifier("jpa") CustomerDbRepositoryPort<CustomerDao> customerDbAdapter) {
         this.customerDbAdapter = customerDbAdapter;
     }
 

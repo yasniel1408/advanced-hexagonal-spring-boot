@@ -1,10 +1,10 @@
 package com.yascode.application.usecases;
 
-import com.yascode.application.usecases.base.BaseUseCase;
 import com.yascode.application.usecases.base.BaseUseCaseWithoutInput;
+import com.yascode.domain.ports.CustomerDbRepositoryPort;
 import com.yascode.infrastructure.in.http.response.CustomerResponseDto;
-import com.yascode.infrastructure.out.db.CustomerDao;
-import com.yascode.infrastructure.out.db.CustomerDbAdapter;
+import com.yascode.infrastructure.out.jpa_db.CustomerDao;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,9 +13,9 @@ import java.util.List;
 @Service
 public class GetCustomersUseCase extends BaseUseCaseWithoutInput<List<CustomerResponseDto>> {
 
-    private final CustomerDbAdapter customerDbAdapter;
+    private final CustomerDbRepositoryPort<CustomerDao> customerDbAdapter;
 
-    public GetCustomersUseCase(CustomerDbAdapter customerDbAdapter) {
+    public GetCustomersUseCase(@Qualifier("jpa") CustomerDbRepositoryPort<CustomerDao> customerDbAdapter) {
         this.customerDbAdapter = customerDbAdapter;
     }
 

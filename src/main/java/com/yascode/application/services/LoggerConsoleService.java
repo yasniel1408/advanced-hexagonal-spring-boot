@@ -1,4 +1,4 @@
-package com.yascode.application.usecases.base;
+package com.yascode.application.services;
 
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -7,8 +7,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 
 @NoArgsConstructor
-public class LoggerConsole {
-    private static final Logger logger = LogManager.getLogger(LoggerConsole.class);
+public class LoggerConsoleService {
+    private static final Logger logger = LogManager.getLogger(LoggerConsoleService.class);
 
     public void logWithBox(String message) {
         // Calcular el ancho dinámicamente basado en la línea más larga

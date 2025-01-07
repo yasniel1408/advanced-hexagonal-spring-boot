@@ -1,7 +1,9 @@
 package com.yascode.application.usecases.base;
 
+import com.yascode.application.services.LoggerConsoleService;
+
 public abstract class BaseUseCaseWithoutOutput<RQ> {
-    private static final LoggerConsole console = new LoggerConsole();
+    private static final LoggerConsoleService console = new LoggerConsoleService();
 
     public void run(RQ request) {
         long startTime = System.currentTimeMillis();

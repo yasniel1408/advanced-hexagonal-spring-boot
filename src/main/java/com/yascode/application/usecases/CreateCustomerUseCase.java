@@ -4,20 +4,22 @@ import com.yascode.application.usecases.base.BaseUseCase;
 import com.yascode.domain.CustomerFactory;
 import com.yascode.domain.entities.Customer;
 import com.yascode.domain.errors.CustomerEmailUniqueException;
+import com.yascode.domain.ports.CustomerDbRepositoryPort;
 import com.yascode.infrastructure.in.http.request.CreateCustomerRequestDto;
 import com.yascode.infrastructure.in.http.response.CustomerResponseDto;
-import com.yascode.infrastructure.out.db.CustomerDao;
-import com.yascode.infrastructure.out.db.CustomerDbAdapter;
+import com.yascode.infrastructure.out.jpa_db.CustomerDao;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CreateCustomerUseCase extends BaseUseCase<CreateCustomerRequestDto, CustomerResponseDto> {
 
-    private final CustomerDbAdapter customerDbAdapter;
+    private final CustomerDbRepositoryPort<CustomerDao> customerDbAdapter;
 
-    public CreateCustomerUseCase(CustomerDbAdapter customerDbAdapter) {
+    public CreateCustomerUseCase(@Qualifier("jpa") CustomerDbRepositoryPort<CustomerDao> customerDbAdapter) {
         this.customerDbAdapter = customerDbAdapter;
     }
+
 
     public CustomerResponseDto execute(CreateCustomerRequestDto requestDto) {
         Customer customer = CustomerFactory.createCustomer(

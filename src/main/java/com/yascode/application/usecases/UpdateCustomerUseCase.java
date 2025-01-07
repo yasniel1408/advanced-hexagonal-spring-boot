@@ -4,24 +4,35 @@ import com.yascode.application.usecases.base.BaseUseCase;
 import com.yascode.domain.CustomerFactory;
 import com.yascode.domain.entities.Customer;
 import com.yascode.domain.errors.CustomerEmailUniqueException;
+import com.yascode.domain.errors.NotFoundCustomerException;
+import com.yascode.domain.errors.NotNullException;
+import com.yascode.domain.ports.CustomerDbRepositoryPort;
 import com.yascode.infrastructure.in.http.request.UpdateCustomerRequestDto;
 import com.yascode.infrastructure.in.http.response.CustomerResponseDto;
-import com.yascode.infrastructure.out.db.CustomerDao;
-import com.yascode.infrastructure.out.db.CustomerDbAdapter;
+import com.yascode.infrastructure.out.jpa_db.CustomerDao;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UpdateCustomerUseCase extends BaseUseCase<UpdateCustomerRequestDto, CustomerResponseDto> {
 
-    private final CustomerDbAdapter customerDbAdapter;
+    private final CustomerDbRepositoryPort<CustomerDao> customerDbAdapter;
 
-    public UpdateCustomerUseCase(CustomerDbAdapter customerDbAdapter) {
+    public UpdateCustomerUseCase(@Qualifier("jpa") CustomerDbRepositoryPort<CustomerDao> customerDbAdapter) {
         this.customerDbAdapter = customerDbAdapter;
     }
 
-
     @Override
     public CustomerResponseDto execute(UpdateCustomerRequestDto requestDto) {
+
+        if (requestDto.id() == null || requestDto.id() == 0) {
+            throw new NotNullException("Id");
+        }
+        boolean existById = customerDbAdapter.existById(requestDto.id());
+        if (!existById) {
+            throw new NotFoundCustomerException(requestDto.id());
+        }
+
 
         Customer customer = CustomerFactory.createCustomer(
                 requestDto.id(),
@@ -31,9 +42,9 @@ public class UpdateCustomerUseCase extends BaseUseCase<UpdateCustomerRequestDto,
                 requestDto.status()
         );
 
-        boolean existEmail = customerDbAdapter.existByEmail(requestDto.email());
+        boolean existByEmail = customerDbAdapter.existByEmail(requestDto.email());
 
-        if (existEmail) {
+        if (existByEmail) {
             throw new CustomerEmailUniqueException(requestDto.email());
         }
 
