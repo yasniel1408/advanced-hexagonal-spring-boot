@@ -3,7 +3,7 @@ package com.yascode.application.usecases;
 import com.yascode.application.usecases.base.BaseUseCaseWithoutInput;
 import com.yascode.domain.ports.CustomerDbRepositoryPort;
 import com.yascode.infrastructure.in.http.response.CustomerResponseDto;
-import com.yascode.infrastructure.out.jpa_db.CustomerDao;
+import com.yascode.infrastructure.out.jdbc_db.CustomerDao;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class GetCustomersUseCase extends BaseUseCaseWithoutInput<List<CustomerRe
 
     private final CustomerDbRepositoryPort<CustomerDao> customerDbAdapter;
 
-    public GetCustomersUseCase(@Qualifier("jpa") CustomerDbRepositoryPort<CustomerDao> customerDbAdapter) {
+    public GetCustomersUseCase(@Qualifier("jdbc") CustomerDbRepositoryPort<CustomerDao> customerDbAdapter) {
         this.customerDbAdapter = customerDbAdapter;
     }
 
